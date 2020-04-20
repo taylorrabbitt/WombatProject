@@ -41,23 +41,21 @@ def encryptVote(msg):
   
         return x % c  
   
-    en_msg = []
+    cipher = []
     q = random.randint(pow(10, 20), pow(10, 50)) 
     g = random.randint(2, q)
     key = gen_key(q)
-    h = power(g, key, q)
-  
+    p = power(g, key, q)
+    s = power(p, key, q)
      
-    s = power(h, key, q)
-    p = power(g, key, q) 
       
     for i in range(0, len(msg)): 
-        en_msg.append(msg[i]) 
+        cipher.append(msg[i]) 
    
-    for i in range(0, len(en_msg)): 
-        en_msg[i] = s * ord(en_msg[i]) 
+    for i in range(0, len(cipher)): 
+        cipher[i] = s * ord(cipher[i]) 
   
-    return en_msg, p
+    return msg, cipher
 
 
 
@@ -85,5 +83,5 @@ def tallyProcess():
 
 #Test code  
 if __name__ == '__main__': 
-    msg = 'encryption'
+    msg = 'I vote President Brown'
     print(encryptVote(msg)) 
