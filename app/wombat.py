@@ -1,14 +1,15 @@
 import random  
 from math import gcd
-  
+
+#global variables
 p = None
 key = None
 q = None
 pt = None
 ct = None
+
 # Generates a random key 
 def genKey(q): 
-  
     key = random.randint(pow(10, 20), q) 
     while gcd(q, key) != 1: 
         key = random.randint(pow(10, 20), q) 
@@ -17,18 +18,20 @@ def genKey(q):
   
 def auditVote():
     '''
-    Auditing of votes (decryption of ElGamal)
-        -Function that takes both plaintext and ciphertext
-        and decrypts the ciphertext using ElGamal to verify
-        that plaintext and ciphertext match
+    Auditing of votes (decryption of ElGamal) -
+    decrypts the ciphertext using ElGamal to verify that plaintext 
+    and ciphertext match.
     '''
-    h = pow(p, key, q) 
+    h = pow(p, key, q)
+
+    #get individual characters of plaintext 
     plaintext = [chr(int(i/h)) for i in ct] 
 
     voteTest = ''
     for i in pt:
         voteTest += i
 
+    #returns False if plaintext and unencrypted vote do not match
     if pt != voteTest:
         return False
          
@@ -36,9 +39,8 @@ def auditVote():
 
 def encryptVote(vote):
     '''
-    Encryption of votes (ElGamal)
-        -Function that takes vote and encrypts using ElGamal -> returns
-        (plaintext, ciphertext)
+    Encryption of votes (ElGamal) -
+    encrypts the plaintext using ElGamal encryption
     '''
     #Recieve vote from user
 
@@ -48,8 +50,10 @@ def encryptVote(vote):
     global pt
     global ct
 
+    #update global variables
     pt = vote
 
+    #separate vote into individual characters
     cipher = [vote[i] for i in range(len(vote))]
 
     q = random.randint(pow(10, 20), pow(10, 50)) 
@@ -58,13 +62,16 @@ def encryptVote(vote):
     p = pow(g, key, q)
     s = pow(p, key, q)
     
-    #encrypt each character in the vote 
+    #encrypt each character in the vote according to El Gamal Encryption
     for i in range(len(cipher)): 
         cipher[i] = s * ord(cipher[i]) 
     
+    #join encrypted characters
     ciphertext = ''
     for i in cipher:
         ciphertext += str(i) 
+
+    #update global variable
     ct = cipher
 
     return vote, ciphertext
