@@ -2,7 +2,11 @@
 Implementation of Wombat Project Voting Machine
 
 ## To run:
-From the app directory, run the following terminal command:
+First, if you do not have flask installed, run the following command:
+
+```pip3 install flask```
+
+From the app directory, run the following terminal commands:
 
 ``` python3 server.py ```
 
