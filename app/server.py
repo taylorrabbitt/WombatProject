@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, g
+from flask import Flask, render_template, request, redirect
 from hashlib import sha256
 import wombat 
 from wombat import pt,ct
@@ -14,9 +14,6 @@ def encrypt():
 	data = request.form.get('vote')
 	print(data)
 	res = wombat.encryptVote(data)
-
-	g.pt = res[0]
-	g.ct = res[1]
 	ct = res[1]
 
 	h = sha256()
