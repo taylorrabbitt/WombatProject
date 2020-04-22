@@ -3,6 +3,15 @@ from hashlib import sha256
 import wombat 
 from wombat import pt,ct
 
+'''
+Enpoints:
+ - http://localhost:5000
+ - http://localhost:5000/submitted
+ - http://localhost:5000/audit
+ - http://localhost:5000/success
+ - http://localhost:5000/error
+ '''
+
 #Flask api to interact with html pages
 app = Flask(__name__)
 
@@ -46,7 +55,7 @@ def success():
 	return render_template('success.html')
 
 #If the audit fails, the voter will be notified of the error
-@app.route('/error', methods=['POST'])
+@app.route('/error', methods=['GET','POST'])
 def error():
 	return render_template('failedAudit.html')
 
